@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}PDI Inspection{% endblock %}
+{% block nav_pdi %}active{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-8">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'pdi:inspection_list' %}">PDI Inspections</a></li>
+                <li class="breadcrumb-item active">{{ inspection.vehicle.stock_number }}</li>
+            </ol>
+        </nav>
+        <h2>PDI Inspection</h2>
+        <p class="text-muted">{{ inspection.vehicle.manufacturer }} {{ inspection.vehicle.model }} &mdash; {{ inspection.vehicle.stock_number }}</p>
+    </div>
+    <div class="col-md-4 text-end">
+        {% if not inspection.is_complete and user.is_technician %}
+        <form method="post" action="{% url 'pdi:inspection_complete' inspection.pk %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-dark"
+                    onclick="return confirm('Mark this PDI as complete?')">
+                <i class="bi bi-check-circle me-1"></i>Complete PDI
+            </button>
+        </form>
+        {% endif %}
+        {% if inspection.is_complete and not has_sign_off and user.is_technician %}
+        <a href="{% url 'pdi:sign_off' inspection.pk %}" class="btn btn-success">
+            <i class="bi bi-pen me-1"></i>Sign Off
+        </a>
+        {% endif %}
+    </div>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="h5">{% if inspection.is_complete %}<span class="text-success">Complete</span>{% else %}<span class="text-warning">In Progress</span>{% endif %}</div>
+                <small class="text-muted">Status</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="h5">{{ inspection.items.count }}</div>
+                <small class="text-muted">Total Items</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="h5 text-success">{{ inspection.items.all|length }}</div>
+                <small class="text-muted">Completed</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                {% if inspection.overall_result == 'pass' %}
+                <div class="h5"><span class="badge bg-success fs-6">PASS</span></div>
+                {% elif inspection.overall_result == 'fail' %}
+                <div class="h5"><span class="badge bg-danger fs-6">FAIL</span></div>
+                {% else %}
+                <div class="h5 text-muted">—</div>
+                {% endif %}
+                <small class="text-muted">Result</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% for section, items in sections.items %}
+<div class="card mb-3">
+    <div class="card-header bg-dark text-white">
+        <h6 class="mb-0">{{ section }}</h6>
+    </div>
+    <div class="card-body p-0">
+        <table class="table table-sm mb-0">
+            <tbody>
+            {% for item in items %}
+            <tr class="{% if item.status == 'pass' %}table-success{% elif item.status == 'fail' %}table-danger{% elif item.status == 'na' %}table-light{% endif %}">
+                <td>{{ item.template_item.description }}</td>
+                <td class="text-center" style="width: 80px;">
+                    {% if item.status == 'pass' %}<span class="badge bg-success">Pass</span>
+                    {% elif item.status == 'fail' %}<span class="badge bg-danger">Fail</span>
+                    {% elif item.status == 'na' %}<span class="badge bg-secondary">N/A</span>
+                    {% else %}<span class="badge bg-warning text-dark">Pending</span>{% endif %}
+                </td>
+                <td>{% if item.notes %}<small class="text-muted">{{ item.notes }}</small>{% endif %}</td>
+                <td style="width: 80px;">
+                    {% if not inspection.is_complete and user.is_technician %}
+                    <a href="{% url 'pdi:item_update' item.pk %}" class="btn btn-xs btn-outline-dark btn-sm">Update</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% empty %}
+<div class="alert alert-warning">No inspection items found for this inspection.</div>
+{% endfor %}
+
+{% if has_sign_off %}
+<div class="card border-success mt-3">
+    <div class="card-header bg-success text-white">
+        <h6 class="mb-0"><i class="bi bi-check-circle me-1"></i>Signed Off</h6>
+    </div>
+    <div class="card-body">
+        <dl class="row mb-0">
+            <dt class="col-3">Technician</dt><dd class="col-9">{{ inspection.sign_off.signature_name }}</dd>
+            <dt class="col-3">Date/Time</dt><dd class="col-9">{{ inspection.sign_off.signed_at|date:"d M Y H:i" }}</dd>
+            <dt class="col-3">Result</dt><dd class="col-9">{{ inspection.sign_off.result|upper }}</dd>
+            {% if inspection.sign_off.notes %}<dt class="col-3">Notes</dt><dd class="col-9">{{ inspection.sign_off.notes }}</dd>{% endif %}
+        </dl>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
