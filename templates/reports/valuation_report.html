@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% load humanize %}
+{% block title %}Valuation Report{% endblock %}
+{% block nav_reports %}active{% endblock %}
+{% block content %}
+<h2 class="mb-4">Valuation Report</h2>
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="h4">£{{ total_purchase|default:0|intcomma }}</div>
+                <small class="text-muted">Total Purchase Value</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="h4">£{{ total_rrp|default:0|intcomma }}</div>
+                <small class="text-muted">Total RRP Value</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body text-center">
+                <div class="h4">{{ count }}</div>
+                <small class="text-muted">Stock Items</small>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="card">
+    <div class="table-responsive">
+        <table class="table table-sm mb-0">
+            <thead class="table-dark">
+                <tr><th>Stock No.</th><th>Manufacturer</th><th>Model</th><th>Purchase Cost</th><th>RRP</th></tr>
+            </thead>
+            <tbody>
+            {% for v in vehicles %}
+            <tr>
+                <td><a href="{{ v.get_absolute_url }}">{{ v.stock_number }}</a></td>
+                <td>{{ v.manufacturer }}</td>
+                <td>{{ v.model }}</td>
+                <td>{% if v.purchase_cost %}£{{ v.purchase_cost|intcomma }}{% endif %}</td>
+                <td>{% if v.recommended_retail_price %}£{{ v.recommended_retail_price|intcomma }}{% endif %}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

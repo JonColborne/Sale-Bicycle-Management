@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ company.name }}{% endblock %}
+
+{% block content %}
+<h2>{{ company.name }}</h2>
+<dl class="row">
+    <dt class="col-3">Code</dt><dd class="col-9"><code>{{ company.slug }}</code></dd>
+    <dt class="col-3">Address</dt><dd class="col-9">{{ company.address_line_1 }}</dd>
+    <dt class="col-3">Town</dt><dd class="col-9">{{ company.town }}</dd>
+    <dt class="col-3">Phone</dt><dd class="col-9">{{ company.phone }}</dd>
+    <dt class="col-3">Email</dt><dd class="col-9">{{ company.email }}</dd>
+</dl>
+{% endblock %}

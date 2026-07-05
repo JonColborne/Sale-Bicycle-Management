@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}PDI Inspections{% endblock %}
+{% block nav_pdi %}active{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col-md-8">
+        <h2><i class="bi bi-clipboard-check me-2"></i>PDI Inspections</h2>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <table class="table table-hover table-sm mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Vehicle</th>
+                    <th>Technician</th>
+                    <th>Started</th>
+                    <th>Complete</th>
+                    <th>Result</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for inspection in inspections %}
+            <tr>
+                <td>
+                    <a href="{{ inspection.vehicle.get_absolute_url }}" class="text-decoration-none">
+                        {{ inspection.vehicle.stock_number }}
+                    </a>
+                    <small class="text-muted d-block">{{ inspection.vehicle.manufacturer }} {{ inspection.vehicle.model }}</small>
+                </td>
+                <td>{{ inspection.technician.get_full_name }}</td>
+                <td>{{ inspection.started_at|date:"d M Y" }}</td>
+                <td>
+                    {% if inspection.is_complete %}
+                    <i class="bi bi-check-circle text-success"></i>
+                    {% else %}
+                    <i class="bi bi-clock text-warning"></i>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if inspection.overall_result == 'pass' %}
+                    <span class="badge bg-success">PASS</span>
+                    {% elif inspection.overall_result == 'fail' %}
+                    <span class="badge bg-danger">FAIL</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{% url 'pdi:inspection_detail' inspection.pk %}" class="btn btn-sm btn-outline-dark">View</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="6" class="text-center text-muted py-4">No inspections found.</td></tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

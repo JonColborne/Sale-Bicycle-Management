@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{% block title %}{% if object %}Edit {{ object.stock_number }}{% else %}Add Vehicle{% endif %}{% endblock %}
+{% block nav_vehicles %}active{% endblock %}
+
+{% block content %}
+<div class="row mb-3">
+    <div class="col">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{% url 'vehicles:vehicle_list' %}">Stock</a></li>
+                <li class="breadcrumb-item active">{% if object %}Edit {{ object.stock_number }}{% else %}Add Vehicle{% endif %}</li>
+            </ol>
+        </nav>
+        <h2>{% if object %}Edit Vehicle{% else %}Add New Vehicle{% endif %}</h2>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="post">
+            {% csrf_token %}
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <label for="{{ form.company.id_for_label }}" class="form-label">Company *</label>
+                    {{ form.company }}
+                    {% if form.company.errors %}<div class="text-danger small">{{ form.company.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.vehicle_type.id_for_label }}" class="form-label">Vehicle Type *</label>
+                    {{ form.vehicle_type }}
+                    {% if form.vehicle_type.errors %}<div class="text-danger small">{{ form.vehicle_type.errors }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label for="{{ form.drive_type.id_for_label }}" class="form-label">Drive Type *</label>
+                    {{ form.drive_type }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ form.condition.id_for_label }}" class="form-label">Condition *</label>
+                    {{ form.condition }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ form.status.id_for_label }}" class="form-label">Status *</label>
+                    {{ form.status }}
+                </div>
+
+                <div class="col-12"><hr><h6>Vehicle Details</h6></div>
+                <div class="col-md-4">
+                    <label for="{{ form.manufacturer.id_for_label }}" class="form-label">Manufacturer *</label>
+                    {{ form.manufacturer }}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.model.id_for_label }}" class="form-label">Model *</label>
+                    {{ form.model }}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.model_year.id_for_label }}" class="form-label">Model Year</label>
+                    {{ form.model_year }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ form.colour.id_for_label }}" class="form-label">Colour</label>
+                    {{ form.colour }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ form.frame_size.id_for_label }}" class="form-label">Frame Size</label>
+                    {{ form.frame_size }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ form.frame_material.id_for_label }}" class="form-label">Frame Material</label>
+                    {{ form.frame_material }}
+                </div>
+                <div class="col-md-3">
+                    <label for="{{ form.serial_number.id_for_label }}" class="form-label">Serial Number</label>
+                    {{ form.serial_number }}
+                </div>
+
+                <div class="col-12"><hr><h6>Purchase Information</h6></div>
+                <div class="col-md-4">
+                    <label for="{{ form.supplier.id_for_label }}" class="form-label">Supplier</label>
+                    {{ form.supplier }}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.purchase_date.id_for_label }}" class="form-label">Purchase Date</label>
+                    {{ form.purchase_date }}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.purchase_cost.id_for_label }}" class="form-label">Purchase Cost (£)</label>
+                    {{ form.purchase_cost }}
+                </div>
+
+                <div class="col-12"><hr><h6>Pricing</h6></div>
+                <div class="col-md-4">
+                    <label for="{{ form.recommended_retail_price.id_for_label }}" class="form-label">RRP (£)</label>
+                    {{ form.recommended_retail_price }}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.minimum_sale_price.id_for_label }}" class="form-label">Minimum Sale Price (£)</label>
+                    {{ form.minimum_sale_price }}
+                </div>
+                <div class="col-md-4">
+                    <label for="{{ form.actual_sale_price.id_for_label }}" class="form-label">Actual Sale Price (£)</label>
+                    {{ form.actual_sale_price }}
+                </div>
+
+                <div class="col-12"><hr></div>
+                <div class="col-12">
+                    <label for="{{ form.notes.id_for_label }}" class="form-label">Notes</label>
+                    {{ form.notes }}
+                </div>
+            </div>
+
+            <div class="mt-4 d-flex gap-2">
+                <button type="submit" class="btn btn-dark">
+                    <i class="bi bi-save me-1"></i>{% if object %}Save Changes{% else %}Add Vehicle{% endif %}
+                </button>
+                <a href="{% if object %}{{ object.get_absolute_url }}{% else %}{% url 'vehicles:vehicle_list' %}{% endif %}" class="btn btn-outline-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Add Bootstrap form-control class to all form inputs
+document.querySelectorAll('select, input[type="text"], input[type="number"], input[type="date"], textarea').forEach(el => {
+    if (!el.classList.contains('form-control') && !el.classList.contains('form-select')) {
+        if (el.tagName === 'SELECT') {
+            el.classList.add('form-select');
+        } else {
+            el.classList.add('form-control');
+        }
+    }
+});
+</script>
+{% endblock %}

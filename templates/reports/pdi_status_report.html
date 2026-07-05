@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}PDI Status Report{% endblock %}
+{% block nav_reports %}active{% endblock %}
+{% block content %}
+<h2 class="mb-4">PDI Status Report</h2>
+<div class="card mb-4">
+    <div class="card-header bg-warning text-dark"><h6 class="mb-0">Awaiting Inspection ({{ awaiting.count }})</h6></div>
+    <div class="table-responsive">
+        <table class="table table-sm mb-0">
+            <thead><tr><th>Stock No.</th><th>Make/Model</th><th>Company</th></tr></thead>
+            <tbody>
+            {% for v in awaiting %}
+            <tr><td><a href="{{ v.get_absolute_url }}">{{ v.stock_number }}</a></td><td>{{ v.manufacturer }} {{ v.model }}</td><td>{{ v.company.name }}</td></tr>
+            {% empty %}<tr><td colspan="3" class="text-muted">None</td></tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-info text-dark"><h6 class="mb-0">PDI In Progress ({{ in_progress.count }})</h6></div>
+    <div class="table-responsive">
+        <table class="table table-sm mb-0">
+            <thead><tr><th>Stock No.</th><th>Make/Model</th><th>Company</th></tr></thead>
+            <tbody>
+            {% for v in in_progress %}
+            <tr><td><a href="{{ v.get_absolute_url }}">{{ v.stock_number }}</a></td><td>{{ v.manufacturer }} {{ v.model }}</td><td>{{ v.company.name }}</td></tr>
+            {% empty %}<tr><td colspan="3" class="text-muted">None</td></tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+<div class="card mb-4">
+    <div class="card-header bg-success text-white"><h6 class="mb-0">Ready For Sale ({{ completed.count }})</h6></div>
+    <div class="table-responsive">
+        <table class="table table-sm mb-0">
+            <thead><tr><th>Stock No.</th><th>Make/Model</th><th>Company</th></tr></thead>
+            <tbody>
+            {% for v in completed %}
+            <tr><td><a href="{{ v.get_absolute_url }}">{{ v.stock_number }}</a></td><td>{{ v.manufacturer }} {{ v.model }}</td><td>{{ v.company.name }}</td></tr>
+            {% empty %}<tr><td colspan="3" class="text-muted">None</td></tr>{% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

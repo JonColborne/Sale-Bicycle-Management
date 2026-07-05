@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+{% block nav_dashboard %}active{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h2><i class="bi bi-speedometer2 me-2"></i>Dashboard</h2>
+        {% if user.company %}
+        <p class="text-muted">{{ user.company.name }}</p>
+        {% endif %}
+    </div>
+</div>
+
+<!-- KPI Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-6 col-md-3">
+        <div class="card border-warning h-100">
+            <div class="card-body text-center">
+                <div class="display-6 text-warning fw-bold">{{ awaiting_inspection }}</div>
+                <div class="text-muted small mt-1">Awaiting Inspection</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-info h-100">
+            <div class="card-body text-center">
+                <div class="display-6 text-info fw-bold">{{ pdi_in_progress }}</div>
+                <div class="text-muted small mt-1">PDI In Progress</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-success h-100">
+            <div class="card-body text-center">
+                <div class="display-6 text-success fw-bold">{{ ready_for_sale }}</div>
+                <div class="text-muted small mt-1">Ready For Sale</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-6 col-md-3">
+        <div class="card border-dark h-100">
+            <div class="card-body text-center">
+                <div class="display-6 text-dark fw-bold">{{ sold_this_month }}</div>
+                <div class="text-muted small mt-1">Sold This Month</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Value Cards -->
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card bg-dark text-white h-100">
+            <div class="card-body">
+                <h6 class="card-title text-muted">Total Stock Items</h6>
+                <div class="h3 mb-0">{{ total_stock }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-secondary text-white h-100">
+            <div class="card-body">
+                <h6 class="card-title">Stock Purchase Value</h6>
+                <div class="h3 mb-0">£{{ stock_purchase_value|floatformat:2 }}</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white h-100">
+            <div class="card-body">
+                <h6 class="card-title">Potential Retail Value</h6>
+                <div class="h3 mb-0">£{{ potential_retail_value|floatformat:2 }}</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <!-- Status Breakdown -->
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header">
+                <h6 class="mb-0">Stock Status Breakdown</h6>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <tbody>
+                    {% for item in status_breakdown %}
+                    <tr>
+                        <td>{{ item.label }}</td>
+                        <td class="text-end fw-bold">{{ item.count }}</td>
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Additions -->
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h6 class="mb-0">Recently Added Stock</h6>
+                <a href="{% url 'vehicles:vehicle_list' %}" class="btn btn-sm btn-outline-dark">View All</a>
+            </div>
+            <div class="card-body p-0">
+                <table class="table table-sm mb-0">
+                    <tbody>
+                    {% for v in recent_vehicles %}
+                    <tr>
+                        <td>
+                            <a href="{{ v.get_absolute_url }}" class="text-decoration-none">{{ v.stock_number }}</a>
+                        </td>
+                        <td>{{ v.manufacturer }} {{ v.model }}</td>
+                        <td>
+                            <span class="badge bg-secondary">{{ v.get_status_display }}</span>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-center text-muted py-3">No vehicles in stock</td></tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,359 @@
+[
+  {
+    "model": "pdi.pditemplate",
+    "pk": 1,
+    "fields": {
+      "name": "Universal PDI",
+      "layer": "universal",
+      "vehicle_type": "",
+      "drive_type": "",
+      "motor_manufacturer": "",
+      "description": "Applied to every vehicle regardless of type or drive system.",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "pdi.pditemplate",
+    "pk": 2,
+    "fields": {
+      "name": "Child's Bike PDI",
+      "layer": "vehicle_type",
+      "vehicle_type": "childs_bike",
+      "drive_type": "",
+      "motor_manufacturer": "",
+      "description": "Additional checks for children's bicycles.",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "pdi.pditemplate",
+    "pk": 3,
+    "fields": {
+      "name": "Electric Vehicle PDI",
+      "layer": "electric",
+      "vehicle_type": "",
+      "drive_type": "electrically_assisted",
+      "motor_manufacturer": "",
+      "description": "Additional checks for all electrically assisted vehicles.",
+      "is_active": true,
+      "created_at": "2026-01-01T00:00:00Z",
+      "updated_at": "2026-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 1,
+    "fields": {
+      "template": 1,
+      "section": "Identification",
+      "description": "Serial number verified against documentation",
+      "guidance": "Check serial number on frame matches all documentation.",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 2,
+    "fields": {
+      "template": 1,
+      "section": "Identification",
+      "description": "Manufacturer verified",
+      "guidance": "",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 3,
+    "fields": {
+      "template": 1,
+      "section": "Identification",
+      "description": "Model verified",
+      "guidance": "",
+      "is_mandatory": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 4,
+    "fields": {
+      "template": 1,
+      "section": "Assembly",
+      "description": "Correct assembly completed per manufacturer instructions",
+      "guidance": "Refer to manufacturer assembly guide.",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 5,
+    "fields": {
+      "template": 1,
+      "section": "Assembly",
+      "description": "All fasteners torqued to specification",
+      "guidance": "Use calibrated torque wrench. Record torque values.",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 6,
+    "fields": {
+      "template": 1,
+      "section": "Safety",
+      "description": "Frame inspected for damage/defects",
+      "guidance": "Check welds, tubes, dropouts.",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 7,
+    "fields": {
+      "template": 1,
+      "section": "Safety",
+      "description": "Fork inspected for damage/defects",
+      "guidance": "Check crown, steerer, dropouts.",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 8,
+    "fields": {
+      "template": 1,
+      "section": "Safety",
+      "description": "Brake operation verified front and rear",
+      "guidance": "Check lever feel, pad contact, cable tension.",
+      "is_mandatory": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 9,
+    "fields": {
+      "template": 1,
+      "section": "Safety",
+      "description": "Wheel retention verified",
+      "guidance": "Check QR or through-axle security.",
+      "is_mandatory": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 10,
+    "fields": {
+      "template": 1,
+      "section": "Functional",
+      "description": "Gear operation verified across full range",
+      "guidance": "Check all shifts up and down under load if possible.",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 11,
+    "fields": {
+      "template": 1,
+      "section": "Functional",
+      "description": "Bearing adjustment checked (headset, BB, hubs)",
+      "guidance": "",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 12,
+    "fields": {
+      "template": 1,
+      "section": "Functional",
+      "description": "Wheel trueness within acceptable tolerance",
+      "guidance": "Max lateral deviation 2mm.",
+      "is_mandatory": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 13,
+    "fields": {
+      "template": 1,
+      "section": "Final",
+      "description": "Test ride completed",
+      "guidance": "Minimum 5 minute test ride.",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 14,
+    "fields": {
+      "template": 1,
+      "section": "Final",
+      "description": "Documentation check complete",
+      "guidance": "All required documentation present.",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 15,
+    "fields": {
+      "template": 2,
+      "section": "Child Safety",
+      "description": "Stabiliser security verified (if fitted)",
+      "guidance": "",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 16,
+    "fields": {
+      "template": 2,
+      "section": "Child Safety",
+      "description": "Chain guard fitted and secure",
+      "guidance": "",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 17,
+    "fields": {
+      "template": 2,
+      "section": "Child Safety",
+      "description": "Brake lever reach appropriate for child's hands",
+      "guidance": "Adjust reach if necessary.",
+      "is_mandatory": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 18,
+    "fields": {
+      "template": 2,
+      "section": "Child Safety",
+      "description": "Saddle height set to appropriate child size",
+      "guidance": "",
+      "is_mandatory": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 19,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Battery security verified",
+      "guidance": "Check battery lock and retention.",
+      "is_mandatory": true,
+      "order": 1
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 20,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Motor security verified",
+      "guidance": "Check motor mounting bolts.",
+      "is_mandatory": true,
+      "order": 2
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 21,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Wiring condition inspected",
+      "guidance": "No chafing, cuts or exposed conductors.",
+      "is_mandatory": true,
+      "order": 3
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 22,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Connector condition inspected",
+      "guidance": "All connectors fully seated, no corrosion.",
+      "is_mandatory": true,
+      "order": 4
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 23,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Display function verified",
+      "guidance": "Check all modes, battery indicator, assist levels.",
+      "is_mandatory": true,
+      "order": 5
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 24,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Speed sensor alignment verified",
+      "guidance": "Check magnet and sensor gap.",
+      "is_mandatory": true,
+      "order": 6
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 25,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "Firmware is current version",
+      "guidance": "Check manufacturer app/tool for firmware updates.",
+      "is_mandatory": true,
+      "order": 7
+    }
+  },
+  {
+    "model": "pdi.pditemplateitem",
+    "pk": 26,
+    "fields": {
+      "template": 3,
+      "section": "Electrical",
+      "description": "No active error codes",
+      "guidance": "Clear any historic codes and verify no active faults.",
+      "is_mandatory": true,
+      "order": 8
+    }
+  }
+]
